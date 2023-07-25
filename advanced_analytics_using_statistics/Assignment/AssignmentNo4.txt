@@ -1,0 +1,12 @@
+Q.No 1] A coin is thrown 3 times .what is the probability that at least one 
+head is obtained?
+Q.No 2] Three fair coins are tossed simultaneously. What is the probability of getting at least 2 tails?
+
+Q.No 3] A fair coin is flipped three times. Make the sample space and find the probabilities of the following events:
+
+Getting all Heads.
+Getting all Tails.
+Getting an even number of Tails.
+Getting more Heads than Tails.
+
+

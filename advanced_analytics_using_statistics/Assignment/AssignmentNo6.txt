@@ -1,0 +1,20 @@
+
+1)Write a python program to create dictionary of ten employees.
+Each element in dictionary must have a unique “empid” as key. And each key in the dictionary must hold values as a record of employee having details as “name”,”department”, “salary”,”years_of_experience”.
+ a) display all the values of each element inside the dictionary.
+b) delete the last employee record from dictionary and display the dictionary
+c) write the 9 records of employee inside the csv file.
+d) plot a scatter plot of “salary” and “ years_of_experience”
+
+
+
+2)Plot the following data using a line plot:
+Day	1	2	3	4	5	6	7
+Tickets Sold	2000	2800	3000	2500	2300	2500	1000
+
+Before displaying the plot display “Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday” in place of Day 1, 2, 3, 4, 5, 6, 7
+Change the color of the line to ‘Magenta’.
+
+title=Day wise Tickets sold 
+xlable=Days
+ylabel=No of tickets sold

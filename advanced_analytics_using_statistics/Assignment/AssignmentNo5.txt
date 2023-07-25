@@ -1,0 +1,27 @@
+Q.NO.1] The tickets are marked from number 1 to 20. One ticket is chosen at random. Find the probability that the ticket selected has a digit that is a multiple of number 3 or number 5.
+
+Q.NO.2]  There are 300 students in a school. Out of them, 95 students play cricket, 120 students play football, 80 students play volleyball and 5 students don’t play any games. A student is chosen randomly, find the probability that the chosen student
+
+         a] plays volleyball
+
+         b] either cricket or volleyball sport
+
+         c] neither football nor volleyball
+
+Q.NO.3]There are 90 discs that are numbered from 1 to number 90 in a box. 1 disc is selected at random from the box given. Find the probability that
+
+       a] 2-digit numbers are obtained
+
+       b] perfect squares are obtained 
+
+       c] multiples of number 5 are obtained
+
+       d] numbers that are divisible by 3 and 5 are obtained
+
+Q.NO.4] Consider the example of finding the probability of selecting a black card or a 6 from a deck of 52 cards.
+
+Q.NO.5] What is the probability of getting a 2 or a 5 when a die is rolled?
+
+Q.NO.6] Say, a coin is tossed twice. What is the probability of getting two consecutive tails ?
+
+Q.NO.7] Consider another example where a pack contains 4 blue, 2 red and 3 black pens. If a pen is drawn at random from the pack, replaced and the process repeated 2 more times, What is the probability of drawing 2 blue pens and 1 black pen?

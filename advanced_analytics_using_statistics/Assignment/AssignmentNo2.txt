@@ -1,0 +1,18 @@
+Q.NO.1]    1] Read the data from a jamesbond.csv file from Dataset folder
+	
+	2] plot scatter plot where xlable - Year . Ylable - Box Office title - Box Office vs Year
+	3] plot scatter plot where xlable - Year . Ylable - Budget title - Budget Vs Year
+	
+ Q.NO.2] Read Adler.csv.
+	check the number of values missing in rating column
+	get the mean value of rating 	
+	replace the missing values with mean of rating column
+	check the number of values missing in rating column
+	check the mean of rating column after filling the NA records with mean
+	add Exrtarating column based on rating* 20
+	add Newrating column = rating + Exrtarating
+
+
+
+
+

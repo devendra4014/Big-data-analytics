@@ -1,0 +1,23 @@
+Q.1 Create a 1D array of numbers from 0 to 9
+
+Q.2 Create a 3×3 numpy array of all True’s
+
+Q.3 Extract all odd numbers from arr
+	Input:
+	arr = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+
+Q.4 Replace all odd numbers in arr with -1
+	Input:
+	arr = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+
+Q.5 Convert a 1D array to a 2D array with 2 rows
+	Input:
+	arr = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+
+Q.6] Write a Pandas program to convert a dictionary to a Pandas series.
+
+SSample dictionary: d1 = {'a': 100, 'b': 200, 'c':300, 'd':400, 'e':800}
+
+Q.7] Given a numpy array whose underlying data is of 'int32' type. Change the dtype of the given object to 'float64'.
+arr = [10, 20, 30, 40, 50]
+
