@@ -1,0 +1,450 @@
+
+MongoDB
+
+db.emp.distinct("deptno")
+
+
+show collections;
+db.dept.aggregate([
+  {
+      $lookup:
+      {
+        from:'emp',
+        localField:'_id',
+        foreignField:'deptno',
+        as:'empList'
+      }
+  },
+  {$out:'deptemps'}
+])
+
+
+db.deptemps.find().pretty();
+```
+
+```JS
+// unwind empList array elements from deptemps
+
+db.deptemps.aggregate([
+  {  $unwind:'$empList'}
+  ])
+
+
+
+
+db.deptemps.aggregate([
+  {  $unwind:'$empList'},
+  {
+    $project:{
+      _id:0,
+      dname:1,
+      'empList.ename':1
+    }
+  }
+  ])
+
+
+db.deptemps.aggregate([
+  {  $unwind:'$empList'
+  },
+  {
+    $project:{
+      _id:0,
+      dname:1,
+      'empList.ename':1}
+  },
+  {
+    $addFields:{
+      empName:'$empList.ename'
+    }
+  },
+  {
+    $project:{
+      empList:0
+      }
+  }
+  ])
+
+db.contact.insert({
+  _id:1,
+  name:'Rahul',
+  age:20
+})
+db.contact.insert({
+  _id:2,
+  name:'Prashant',
+  age:40
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//add ename as new field from emp list ename and dont show empList
+
+
+
+==============================================================
+## Update Documents
+* db.collection.update({criteria}, {changes}, upsert);
+* db.collection.updateOne({criteria}, {changes});
+* db.collection.updateMany({criteria}, {changes}
+
+```JS
+show collections;
+
+db.contact.insert({
+	_id: 1,
+	name: 'Rahul',
+	age: 20
+});
+
+db.contact.insert({
+	_id: 2,
+	name: 'Prashant',
+	age: 40
+});
+
+db.contacts.find();
+
+##increment age by 1 whoes ID = 2   $inc
+db.contact.update(
+  { _id:2 },
+  {$inc:{age:1}}
+  )
+
+db.contacts.find();
+
+##increment age by -1 whoes ID = 1
+db.contact.update(
+  { _id:1 },
+  {$inc:{age:-1}}
+  )
+
+
+db.contacts.find();
+
+```
+
+```JS
+db.students.find();
+
+###update Sachin hobbies list and 
+add Cooking  $push
+
+db.students.update({name:'Sachin'},
+  {$push:{ hobbies: 'Cooking'}}
+)
+
+db.students.find();
+
+###update Sachin hobbies list and add Singing
+db.students.update({name:'Sachin'},
+  {$push:{ hobbies: 'Singing'}}
+)
+
+db.students.find();
+
+### update Sachin hobbies list
+ by adding Programming
+db.students.update({name:'Sachin'},
+  {$push:{ hobbies: 'Programming'}}
+)
+
+
+db.students.find();
+### update Sachin hobbies list by adding Singing $addToSet
+db.students.update({name:'Sachin'},
+  {$addToSet:{ hobbies: 'Singing'}}
+)
+
+
+### update Sachin hobbies list by adding Reading
+db.students.update({name:'Sachin'},
+  {$addToSet:{ hobbies: 'Reading'}}
+)
+
+db.students.find();
+
+### update Sachin hobbies list by 
+removing Programming   $pull
+
+db.students.update({name:'Sachin'},
+  {$pull:{ hobbies: 'Programming'}}
+)
+
+db.students.find();
+
+### update Sachin hobbies add each hobbies 
+from the array [ 'Programming', 'Swimming', 'Music', 'Sports' ] 
+without duplicating it
+ $addToSet   $each 
+
+db.students.update({name:'Sachin'},
+  {
+    $addToSet:{ 
+      hobbies: {
+        $each:['Programming', 'Swimming', 'Music', 'Sports']
+        }
+      }
+  } 
+)
+
+db.students.find();
+
+
+### update Sachin hobbies add 
+Drawing at 4th position  $position
+db.students.update({name:'Sachin'},
+  {$push:{hobbies: {
+        $each:['Drawing'],
+        $position:4}
+        }
+      }
+)
+
+
+db.students.find();
+#### update Sachin hobbies 
+add Painting and sort hobbies.  $sort
+
+db.students.update({name:'Sachin'},
+  {$push:{hobbies: {
+        $each:['Painting'],
+        $sort:1}
+        }
+      }
+)
+
+
+db.students.find();
+
+#### update Sachin hobbies  
+and sort hobbies without adding .
+
+db.students.update({name:'Sachin'},
+  {$push:{hobbies: {
+        $each:[],
+        $sort:1}
+        }
+      }
+)
+
+db.students.find();
+
+
+####update Sachin hobbies--> 
+keep only first 3 and remove all other . $slice:3
+
+db.students.update({name:'Sachin'},
+  {$push:{hobbies: {
+        $each:[],
+        $slice:3}
+        }
+      }
+)
+
+db.students.find();
+
+####update Sachin hobbies--> add 2['Programming', 'Teaching']
+ in sorted order and keep only last 3 and remove all other .
+db.students.update({name:'Sachin'},
+  {$push:{hobbies: {
+        $each:['Programming', 'Teaching'],
+        $sort:1,
+        $slice:-3}
+        }
+      }
+)
+
+
+db.students.find();
+
+
+
+
+
+
+----------------------------------------------------
+### strings
+
+```bash
+CMD > redis-cli
+> ping
+
+# set values with respective keys
+> set user_name "Ajit"
+> set user_address "pune"
+
+# get all keys
+> keys *
+
+# delete all keys
+> flushall 
+
+# get a value of a required key
+> get user_name
+
+# delete a key
+> del user_name
+
+```
+
+### hashes
+
+```bash
+
+# set key-value pairs for a hash
+> hset user:ajit username ajit address pune email ajit@test.com
+
+# get all details of the required object
+> hgetall user:ajit
+
+# get required details of a hash
+> hget user:ajit username
+
+# delete a hash
+> del user:ajit
+
+```
+
+### lists
+
+- ordered collection of values
+- allows duplicate values
+
+```bash
+
+# create a list
+> lpush colors red
+
+# add a value from left side (head)
+> lpush colors green
+
+# add a value from right side (tail)
+> rpush colors black
+
+# get all the values by range
+> lrange colors 0 2
+
+# add following values in a list
+# user1, user2, user3, user4, user5
+> rpush users user1 user2 user3 user4 user5
+
+# delete a value from a list
+# lrem <key> <count> <value>
+> lrem users 1 user2
+
+```
+
+### set
+
+- unordered collection of unique values
+- does not allow duplicate values
+
+```bash
+
+# create a set by adding following values
+# though we are adding red multiple times, still it will get stored only once in the set
+# as the set in redis is a collection of unique values
+> sadd colors red green blue black red
+
+# add a value in the existing set
+> sadd colors brown
+
+# get all the members of a set
+> smembers colors
+
+# check if value black exists in the set colors
+# the result is 1
+> sismember colors black
+
+# check if value orange exists in the set colors
+# the result is 0
+> sismember colors orange
+
+# delete red from colors
+> srem colors red
+
+# delete multiple values from a set
+> srem colors black green blue
+
+```
+
+### sorted set
+
+- collection of unique values
+- the values are sorted by the scores
+
+```bash
+
+# create a sorted set
+# zadd key <score> <value>
+> zadd colors 0 red
+
+# add a new value with score 1 which will be placed after red
+> zadd colors 1 green
+
+# get the values from sorted set by range
+> zrange colors 0 2
+
+```
+
+### assignment
+
+- add following object
+  - mobile = {model: 'iphone', company: 'apple', price: 200000}
+- add following list
+  - persons = [steve, bill, dennis]
+
+### publish-subscribe
+
+```bash
+
+# start listening on a channel / subscribe to a channel
+> subscribe channel-1
+
+# publish a message on a selected channel
+> publish channel-1 "this is a message"
+
+```
+
+### transactions
+
+```bash
+
+# start transaction
+# execute all these commands sequentially
+> multi
+> set user_name ajit
+> set user_address pune
+> exec
+
+# start transaction
+# discard in between
+> multi
+> set user_name ajit
+> discard
+
+```
+
+### pipeline
+
+```bash
+
+# send multiple commands to the redis server on port 6379
+# \r\n is a new line character used to terminate a command
+> echo -en "ping\r\n set mobile_model iphone\r\n set mobile_price 200000\r\n" | nc localhost 6379
+
+
+```

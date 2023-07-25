@@ -1,0 +1,16 @@
+How To Install MySQL on Ubuntu
+
+step 1: open terminal
+step 2: run the following command
+	CMD >sudo apt update
+step 3: run the following command
+	CMD >sudo apt install mysql-server
+step 4: run the following command
+	CMD >sudo systemctl start mysql.service
+step 5: run the following command to open up the MySQL prompt
+	CMD >sudo  mysql
+step 6: to exit from  MySQL prompt:
+	mysql > exit
+
+	
+	

@@ -1,0 +1,643 @@
+## aggregation pipeline
+
+- https://www.mongodb.com/docs/manual/reference/operator/aggregation/
+- collection of stages
+- operators
+  - $sort
+  - $limit
+  - $match
+  - $addFields
+  - $project
+ 
+#### sort the employee records 
+on the salary field
+
+# without pipeline
+> db.emp.find().sort({sal: 1})
+
+# with pipeline
+# stage1: for sorting the documents 
+by sal //ASC
+db.emp.aggregate([
+  {$sort:{sal:1}}
+])
+
+//desc
+db.emp.aggregate([
+  {$sort:{sal:-1}}
+])
+
+#### sort the employee records by 
+deptno and job
+
+# without pipelin
+db.emp.find({}).sort({deptno: 1, job: 1})
+
+# with pipeline
+db.emp.aggregate([
+  {$sort: {deptno:1,job:1}}
+])
+
+#### print only ename, 
+sal of every employee
+
+
+# without pipeline
+db.emp.find({}, {ename: 1, sal: 1, _id: 0})
+
+# with pipelind
+db.emp.aggregate([
+  {$project :{ename:1, sal:1, _id:0}}
+])
+
+#### print only ename, 
+sal of every employee sorted by salary
+
+# without pipeline
+db.emp.find({}, {ename: 1, sal: 1}).sort({sal: 1})
+
+# with pipeline
+db.emp.aggregate([
+  {$sort : {sal :1}},
+  {$project: {ename:1 , sal:1 ,_id:0 }}
+])
+
+#### find out the highest 
+paid employee
+
+
+
+# without pipeline
+db.emp.
+    find({}, {ename: 1, sal: 1, _id: 0}).
+    sort({sal: -1}).
+    limit(1)
+
+# with pipeline
+db.emp.aggregate([
+  {$sort:{sal:-1}},
+  {$limit: 1},
+  {$project: {ename:1 , sal:1 ,_id:0 }}
+])
+
+
+#### add a new field
+# adding a new field to every 
+object the stage  -->count=1
+db.emp.aggregate([
+  { $addFields: {count:1}},
+  { $project: {ename:1 , count:1 ,_id:0 }}
+])
+
+
+### find all the employees along 
+with their commissions
+
+
+
+# stage1: add a commission in all the fields with
+#         - zero if the comm does not exist or comm is null
+#         - commission if it is present in the document
+# stage2: calculate total salary => sal + commission
+# stage3: project the result with total salary
+
+# commission:  { $ifNull: ['$comm', 0] }
+# - add new field named commission with value either set from the existing field comm or with value 0
+
+db.emp.aggregate([{ 
+  $addFields: {
+      commissions: {
+          $ifNull:['$comm',0]
+          }
+        }
+      },
+      {
+        $addFields:{
+          totalSalary:{
+            $add: ['$sal','$commissions']
+          }
+        }
+      },
+  { $project: {ename:1 , commissions:1 ,totalSalary:1,_id:0 }}
+])
+
+#### find all the employees working in department no 20
+# without pipeline
+db.emp.find({ deptno: 20 }, {ename: 1, deptno: 1})
+
+# with pipeline
+db.emp.aggregate([
+  {$match :{deptno : 20}},
+  {$project:{ename:1,deptno:1,_id:0}}
+])
+
+### operators
+
+- $group
+- $lookup
+- $out
+
+### display the name of employees 
+starting with A  letters
+
+
+
+# without pipeline
+db.emp.find({ename: { $regex: /^A/ }}, {ename: 1, _id: 0})
+
+# with pipeline
+db.emp.aggregate([
+  {$match:{ename:{$regex:/^A/}}},
+  {$project:{ename:1,_id:0}}
+])
+
+### display all managers in 
+department 30
+
+# without pipeline
+db.emp.find({ job: 'MANAGER', deptno: 30 }, { ename: 1, job: 1, deptno: 1, _id: 0 })
+
+# with pipeline
+
+db.emp.aggregate([
+  {$match:{job: 'MANAGER', deptno: 30}},
+  {$project:{ename:1,job:1,deptno:1,_id:0}}
+])
+
+
+### display the records grouped by deptno
+$group
+
+db.emp.aggregate([
+  {
+    $group:{ _id:'$deptno'}
+  }
+])
+
+### display the sum of salaries 
+per department
+db.emp.aggregate([
+  {
+    $group:{ 
+      _id:'$deptno',
+      sumOfSal: {$sum:'$sal'}
+    }
+  }
+])
+
+
+# first group the records by deptno 
+and then get the sum of salaries
+# _id in the $group operator specifies 
+the group by clause
+### display the sum, average, maximum and minimum 
+of salaries per department
+
+db.emp.aggregate([
+  {
+    $group:{ 
+      _id:'$deptno',
+      sumOfSal: {$sum:'$sal'},
+      avgSal:{$avg:'$sal'},
+      maxSal:{$max:'$sal'},
+      minSal:{$min:'$sal'},
+      count:{$sum:1}
+    }
+  }
+])
+
+
+
+### display the sum, average, maximum and minimum,count of 
+salaries per job
+db.emp.aggregate([
+  {
+    $group:{ 
+      _id:'$job',
+      sumOfSal: {$sum:'$sal'},
+      avgSal:{$avg:'$sal'},
+      maxSal:{$max:'$sal'},
+      minSal:{$min:'$sal'},
+      count:{$sum:1}
+    }
+  }
+])
+
+### display the employee and department associated 
+with every employee
+
+# select e.ename, d.dname from emp e
+# left join dept d ON e.deptno = d._id
+
+# format
+# from: the collection to join
+# localField: name of the field in the current collection
+# foreignField: name of the corresponding field from the foreign collection
+# as: name of the field where the data will be added to the result
+
+db.emp.aggregate([
+  {
+      $lookup:
+      {
+        from:'dept',
+        localField:'deptno',
+        foreignField:'_id',
+        as:'department'
+      }
+  },
+  {$project:{ename:1,'department.dname':1,_id:0}}
+]).pretty()
+
+
+### display the department info and the 
+list of employees working in the department
+# format
+# from: the collection to join
+# localField: name of the field in the current collection
+# foreignField: name of the corresponding field from the foreign collection
+# as: name of the field where the data will be added to the result
+
+db.dept.aggregate([
+  {
+      $lookup:
+      {
+        from:'emp',
+        localField:'_id',
+        foreignField:'deptno',
+        as:'employee'
+      }
+  },
+  {$project:{dname:1,'employee.ename':1,_id:0}}
+]).pretty()
+
+### display the employee and department name 
+associated with every employee
+db.emp.aggregate([
+  {
+      $lookup:
+      {
+        from:'dept',
+        localField:'deptno',
+        foreignField:'_id',
+        as:'department'
+      }
+  },
+  {$project:{ename:1,'department.dname':1,_id:0}}
+]).pretty()
+
+
+
+
+
+
+### store the aggregation result as a 
+new collection
+db.emp.aggregate([
+  {
+      $lookup:
+      {
+        from:'dept',
+        localField:'deptno',
+        foreignField:'_id',
+        as:'department'
+      }
+  },
+  {$out:'newEmp'}
+])
+
+show collections
+db.newEmp.find().pretty()
+
+# out will create a new collection named newCollection
+
+
+------------------------------------------------------
+path on my PC--> /home/sunbeam/Documents/DBMS_git/data_collection_dbms/Day12 
+Run this command on CMD not on mongo shell
+## Importing Data into Mongo
+* CSV import
+	mongoimport -d dbda -c books --type csv --headerline 
+  /home/sunbeam/Documents/DBMS_git/data_collection_dbms/Day12/books_hdr.csv
+
+
+```JS
+use edbd;
+
+show collections;
+
+db.books.find();
+```
+
+* JSON import
+mongoimport -d dbda -c busstops /home/sunbeam/Documents/DBMS_git/data_collection_dbms/Day12/busstops.json
+	
+* JS script
+mongoimport  -d dbda /home/sunbeam/Documents/DBMS_git/data_collection_dbms/Day12/sales.js
+	 
+=========================================================================
+
+## Performance
+
+```JS
+db.emp.find({ job: 'MANAGER' });
+
+db.emp.find({ job: 'MANAGER' }).explain(true);
+
+db.emp.find({ _id: 7900 });
+
+db.emp.find({ _id: 7900 }).explain(true);
+
+db.emp.aggregate([
+{
+	$match: { job: 'MANAGER' }
+}
+]);
+
+db.emp.aggregate([
+{
+	$match: { job: 'MANAGER' }
+}
+], {
+	explain: true
+});
+```
+
+## Mongo Indexes
+Regular index 
+```JS
+db.emp.getIndexes();
+
+// CREATE INDEX idx_job ON emp(job ASC);
+db.emp.createIndex({ job: 1 });
+
+db.emp.getIndexes();
+
+db.emp.find({ job: 'MANAGER' });
+
+db.emp.find({ job: 'MANAGER' }).explain(true);
+```
+
+```JS
+//Composite index
+// CREATE INDEX idx_dept_job ON emp(deptno ASC, job ASC);
+db.emp.createIndex({ job: 1, deptno: 1 });
+
+db.emp.find({ deptno: 30, job: 'MANAGER' });
+
+db.emp.find({ deptno: 30, job: 'MANAGER' }).explain(true);
+```
+
+```JS
+//Unique index
+db.emp.find({ename: 'KING'});
+
+db.emp.find({ename: 'KING'}).explain(true);
+
+db.emp.createIndex({ ename: 1 }, { unique: true });
+
+db.emp.getIndexes();
+
+db.emp.find({ename: 'KING'}).explain(true);
+
+db.emp.insert({ _id: 1000, ename: 'ADAMS' });
+// error-duplicate index error
+```
+
+```JS
+// DROP INDEX ON emp(job);
+db.emp.dropIndex({job:1})
+```
+
+### TTL index (Time To Live index)
+	* Works on some date time field.
+
+```JS
+db.ttl.insert({_id: 1, time: new Date(), msg: 'Message 1' });
+db.ttl.insert({_id: 2, time: new Date(), msg: 'Message 2' });
+db.ttl.insert({_id: 3, time: new Date(), msg: 'Message 3' });
+db.ttl.insert({_id: 4, time: new Date(), msg: 'Message 4' });
+db.ttl.insert({_id: 5, time: new Date(), msg: 'Message 5' });
+db.ttl.insert({_id: 6, time: new Date(), msg: 'Message 6' });
+
+db.ttl.find();
+
+
+
+db.ttl.find();
+
+// create index on "time" field so that documents older than "100" seconds will be auto-deleted.
+
+db.ttl.createIndex({time:1},{expireAfterSeconds:100})
+
+```
+
+### GeoSpatial Index
+* Geo locations are traditionally represented in longitude and latitude.
+* Nowadays location info is used for various purposes
+	* To mark some geo location (of a cab, of a building).
+	* Driving directions (path -- set of points connected linearly).
+	* Find nearby services (search locations/features/services within a radius)
+	* To mark some region (rectangle or polygon).
+* Geo information is stored as GeoJSON format (specification).
+* geojson.io
+
+* GeoJSON formats
+	* type: Point, Line, Polygon
+	* coordinates: 
+		* Point: [long, lat]
+		* Line: [ [long, lat], [long, lat], [long, lat], ... ]
+		* Polygon:  [ [long, lat], [long, lat], [long, lat], [long, lat], [long, lat], [long, lat] ]
+			* Anti-clockwise coordinates
+			* First and Last coordinates must be same
+
+
+```
+
+```
+
+* Mongo GeoSpatial Indexes
+	* 2d index -- legacy indexes on longitude & latitude (not for GeoJSON).
+	* 2d sphere index -- newer indexes on GeoJSON fields.
+	* haystack index -- for smaller area (within mall, ...).
+
+* Mongo GeoSpatial operators
+	* $geoWithin -- find locations within given area (rectangle or polygon).
+	* $geoIntersects -- check if multiple regions/area are intersecting.
+	* $geoNear -- find locations within a radius.
+
+```JS
+create a Collection point by inserting 4 points
+--db.points.insert({name:'p1',location:{type:'Point',coordinates:[0.5,0.5]}})
+--db.points.insert({name:'p1',location:{type:'Point',coordinates:[0.25,0.25]}})
+--db.points.insert({name:'p1',location:{type:'Point',coordinates:[0.75,0.75]}})
+--db.points.insert({name:'p1',location:{type:'Point',coordinates:[1.5,1.5]}})
+
+db.points.find();
+
+create a Polygon geoWithin for above 4 points demo
+
+db.points.find({
+      location:{
+        $geoWithin:{
+          $geometry: {
+            "type": "Polygon",
+            "coordinates": [
+            [
+            [
+              0.0,0.0
+            ],
+            [
+              1.0,0.0
+            ],
+            [
+              1.0,1.0
+            ],
+            [
+             0.0,1.0
+            ],
+            [
+              0.0,0.0
+            ]  
+          ]
+        ]
+      }
+    }
+  }
+})
+
+
+```
+
+```JS
+find PMT busstops withing area specified by Polygon coordinates
+db.busstops.find().pretty();
+
+db.busstops.find({
+      location:{
+        $geoWithin:{
+          $geometry: {
+            "type": "Polygon",
+            "coordinates": [
+            [
+            [
+              73.84898358531237,
+              18.523115659256504
+            ],
+            [
+              73.84795608429818,
+              18.51858464797236
+            ],
+            [
+              73.85316786655483,
+              18.515297828925313
+            ],
+            [
+              73.85934525217621,
+              18.519195050271122
+            ],
+            [
+              73.8572159729641,
+              18.523831688915962
+            ],
+            [
+              73.84898358531237,
+              18.523115659256504
+            ]
+          ]
+        ]
+      }
+    }
+  }
+})
+
+
+
+
+```
+
+```JS
+Find busstops near  by  given point 
+db.busstops.createIndex({ location: "2dsphere" });
+
+db.busstops.find({
+      location:{
+        $geoNear:{
+          $geometry: {
+            "type": "Point",
+            "coordinates": 
+            [
+              73.85342783669296,
+              18.520462801930464
+            ]     
+      },
+      $maxDistance:350
+    }
+  }
+})
+
+```
+## Capped Collections
+
+```JS
+create Capped Collections to store logs having size 10240 and max count of logs 10
+db.createCollection (
+    'logs',{
+    capped: true,
+    size:10240,
+    max:5
+    }
+)
+
+
+show collections;
+
+## insert 5 messages
+
+db.logs.insert({message:"Log message 001"})
+db.logs.insert({message:"Log message 002"})
+db.logs.insert({message:"Log message 003"})
+db.logs.insert({message:"Log message 004"})
+db.logs.insert({message:"Log message 005"})
+
+
+db.logs.find();
+
+### add 3 more  in log
+
+db.logs.insert({message:"Log message 006"})
+db.logs.find();
+db.logs.insert({message:"Log message 007"})
+db.logs.insert({message:"Log message 008"})
+
+
+db.logs.find();
+
+
+### update one message by long string 
+
+db.logs.update({
+  message:"Log message 004"},{
+  $set:{message:'this is new message'}
+})
+// error
+
+### update one message by same number of char in orignal string 
+db.logs.update({
+  message:"Log message 004"},{
+  $set:{message:'Log message XYZ'}
+})
+
+db.logs.find();
+
+
+## try to delete one record
+db.logs.deleteOne({
+  message:'Log message 008'
+})
+
+// error
+```
+
+
+
+

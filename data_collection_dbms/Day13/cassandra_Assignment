@@ -1,0 +1,11 @@
+
+cassandra Assignment
+
+### assignment:
+
+- design a small database for blogging application having following requirements
+  - user: registration, login, update profile
+    - firstName, lastName, email, addresses [multiple], phone_numbers [multiple]
+  - blogs: create blog, select blogs, delete and update blogs
+    - date, userId, description, title, ratings [multiple], comments [multiple]
+

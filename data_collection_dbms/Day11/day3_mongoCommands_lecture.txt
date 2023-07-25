@@ -1,0 +1,473 @@
+# advanced mongo queries
+## finding the documents
+
+## projection
+
+- select the columns / fields in the results
+- syntax
+
+  - db.collection.find(<selection>, <projection>)
+  - where
+    - selection: WHERE clause in SQL, which is used to filter the records
+    - projection: decides the column names to be included in the result
+
+- ways
+
+  - you can not mix inclusion and exclusion together except the case of \_id otherwise you will see following error
+
+    - Cannot do exclusion on field job in inclusion projection
+
+  - inclusion
+
+        # find all employees with name, dept no
+    # select ename, deptno from emp;
+    db.emp.find({},{ename:1, deptno:1})
+
+    # find all employees with only ename and job
+   db.emp.find({},{ename:1, deptno:1,_id:0})
+
+    # find all department names
+    db.dept.find({},{dname:1, _id:0})
+    
+
+  - exclusion
+
+    # find all employees with name, dept no
+    # select ename, deptno from emp;
+     db.emp.find({},{_id:0,job:0,mgr:0,sal:0,comm:0})
+    
+    # find all department names
+    db.dept.find({},{_id:0,loc:0})
+    
+### selection criteria
+
+- used to filter the records based on the criteria passed in the function
+- similar to the where clause in the SQL used in relational databases
+
+- examples on relational operators
+
+  - $eq, $ne, $lt, $gt, $lte, $gte, $in, $nin
+  # find employee with name KING
+  # select * from emp where ename = 'KING';
+  > db.emp.find({ename: 'KING'})
+  > db.emp.find({ename: {$eq:'KING'}})
+  
+
+  # find all employees except name KING
+  # select * from emp where ename != 'KING';
+  db.emp.find({ename: {$ne:'KING'}})
+
+  # find the CLERKs
+  # select * from emp where job = 'CLERK';
+  > db.emp.find({job: 'CLERK'})
+  > db.emp.find({job: {$eq:'CLERK'}})
+
+  
+
+  # find the employees earning less than or 
+  equal to 1000
+  # select * from emp where sal <= 1000;
+  db.emp.find({sal: {$lte:1000}})
+
+
+  # find out the employees not working in 
+  department 30
+  # select * from emp where deptnp != 30;
+  db.emp.find({deptno: {$ne:30}})
+
+
+
+  # find the employees who are either MANAGER 
+  or ANALYST
+  # select * from emp where job in ['MANAGER', 'ANALYST']
+  db.emp.find({job: {$in:['MANAGER','ANALYST']}})
+
+
+  # find the employees who not MANAGER or ANALYST
+  db.emp.find({job: {$nin:['MANAGER','ANALYST']}})
+ 
+
+  ```
+
+- examples on logical operators
+
+  - $or, $and, $nor, $not
+
+ 
+    # find the employees having salary in the 
+    range between 900 to 1300
+    # select * from emp where sal < 1300 and sal > 900
+    
+    db.emp.find({
+      $and:[
+        {sal:{$gt:900}},
+        {sal:{$lt:1300}}
+      ]
+    }
+  )
+
+    # find all the clerks in dept 20
+    # select * from emp where job = 'CLERK' and deptno = 20 
+db.emp.find({
+      $and:[
+        {job:"CLERK"},
+        {deptno:20}
+      ]
+    }
+  )
+
+
+    # find all employees who are working in 
+    dept 30 or getting salary > 1300
+    # select * from emp where deptno = 30 or sal > 1300
+    
+db.emp.find({
+      $or:[
+        {deptno:30},
+        {sal:{$gt:1300}}
+      ]
+    }
+  )
+
+### mixing both selection and projection
+
+
+# get department and salary of KING
+# select deptno, sal from emp where ename = 'KING';
+
+db.emp.find({ename:'KING'},{deptno:1,sal:1,_id:0})
+
+# find the employee who is getting the 
+lowest salary in dept 30
+# select * from emp where deptno = 30 order by sal ASC limit 1
+db.emp.find({deptno:30}).sort({sal:1}).limit(1)
+
+# find the highest paying employee's name 
+and salary who is working in dept 10
+# select ename, sal from emp where deptno = 10 order by sal DESC limit 1
+
+db.emp.find({deptno:10},{ename:1, sal:1,_id:0}).sort({sal:-1}).limit(1)
+----------------------------
+### exists
+
+
+
+# find the employees where comm attribute 
+exists
+# exists means the attribute exists, it may contain null
+db.emp.find({comm:{$exists:true}})
+
+
+# find the employees for whom the 
+commission attribute is missing
+db.emp.find({comm:{$exists:false}})
+
+
+# find the employees who are 
+getting valid (not null) commission
+db.emp.find({
+  $and:[
+    {comm:{$exists:true}},
+    {comm:{$ne:null}}
+  ]
+},{ename:1,comm:1})
+
+
+# find all employees who are getting 
+some commission (> 0)
+db.emp.find({
+  $and:[
+    {comm:{$exists:true}},
+    {comm:{$ne:null}},
+    {comm:{$gt:0}}
+  ]
+},{ename:1,comm:1})
+
+
+### regular expression
+
+- one of the pattern matching technique
+- used to search/find a value matching required pattern
+- the regular expressions are used across the languages (language neutral)
+- used for text processing and data cleansing
+- case sensitive
+- wild character
+  - $: ending with
+  - ^: starting with
+  - .: any single character
+  - []: one character from list of characters
+  - \*: zero or more
+  - +: one or more
+  - ?: zero or one
+
+
+
+# find all the employees having name ending with R
+db.emp.find({ename:/R$/},{ename:1})
+
+
+# find all the employees having name 
+starting with A
+db.emp.find({ename:/^A/},{ename:1,_id:0})
+
+
+# find the employees having 'A' in their names
+db.emp.find({ename:/A/},{ename:1,_id:0})
+
+
+# find the employees having 'A' multiple times
+db.emp.find({ename:/.*A.*A.*/},{ename:1,_id:0})
+
+
+# find the employees having 'A' 
+and 'E' characters
+db.emp.find({ename:/.*A.*E.*/},{ename:1,_id:0})
+
+
+# find employee having name 'JAMES'
+db.emp.find({ename:'JAMES'},{ename:1,_id:0})
+db.emp.find({ename:{$eq:'JAMES'}},{ename:1,_id:0})
+db.emp.find({ename:/JAMES/},{ename:1,_id:0})
+
+
+# exact match
+
+# find employee having name 'James'
+db.emp.find({ename:/James/i},{ename:1,_id:0})
+
+
+# find employee having name JAMES
+db.emp.find({ename:{$regex:/JAMES/}},{ename:1,_id:0})
+
+
+```
+## Delete Records
+// delete a document where deptno=30. 
+[if many recored are matching still delete one]
+db.emp.deleteOne({deptno:30})
+
+db.emp.find({},{ename:1,comm:1,_id:0})
+
+// delete all documents where deptno=30
+
+db.emp.deleteMany({deptno:30})
+// delete all documents who has comm field.
+db.emp.remove({comm:{$exists:true}})
+
+// delete all documents
+
+db.emp.deleteMany({})
+
+### update / upsert / modify
+
+- the document exists and you are suppose to update it
+- update() will update the entire object
+- update() will add the attribute/property if it does not exist
+- syntax
+  - update(<criteria>, <newValues>, <upsert>, <multiple>)
+  - where
+    - criteria: used to select the matching document(s)
+    - newValues: new values you want to update the document with
+    - upsert:
+      - used to insert a new document if it does not exist
+      - if the document exists, update it but if it does not exist then create new document
+      - by default, it is set to false
+    - multiple:
+      - used to update the multiple documents
+      - by default, it is set to false
+
+
+
+# insert some data
+> db.contacts.insert({name: 'contact1', email: 'c1@test.com'})
+> db.contacts.insert({name: 'contact2', phone: '1236548'})
+> db.contacts.insert({name: 'contact3', email: 'c1@teset.com', phone: '1656454'})
+> db.contacts.insert({name: 'contact4', address: 'pune'})
+
+
+
+# update the existing contact1 with
+ new values
+db.contacts.update({name: 'contact1'},{email: 'xyz@test.com'})
+
+db.contacts.update({_id:ObjectId("63ae73b021fc362fbccbbf20")},
+{name: 'contact1', email: 'c1@test.com'})
+
+
+
+# add the properties to existing object
+db.contacts.update({name: 'contact1'},
+{$set:{email: 'test@test.com'}})
+
+
+
+
+
+# update contact1 with phone number
+# $set is used to add/update only the required attributes
+db.contacts.update({name: 'contact1'},
+{$set:{phone:"987687653"}})
+
+
+
+
+# update contact2 with email address
+db.contacts.update({name: 'contact2'},
+{$set:{email:"contact2@gmail.com"}})
+
+
+
+
+
+
+
+# update contact5 with email address
+# since there is no contact with name contact5, nothing will get updated/inserted
+db.contacts.update({name: 'contact5'},
+{name: 'contact5',email:"contact5@yahoo.com",phone:"78765544"},
+true)
+# update contact5 with email address if exists or create new contact otherwise
+# since the third parameter is set to true (upsert), it will create a new record if it does not find any existing one matching with the pattern
+
+
+
+# update all contacts with address = 'pune'
+# param1: select all ({})
+# param2: updated values ({$set: {address: 'pune'})
+# param3: no upsert (false)
+# param4: update multiple documents (true)
+
+
+
+# update all contacts with zipcode = 411041
+db.contacts.update({},{$set:{zipcode:411041}},false,true)
+
+
+
+# update all contacts with city = pune, state = MH and country = india
+
+db.contacts.updateMany({},
+{$set:{city:"pune",state:"MH",country: "india"}})
+
+
+===========================
+## array operations
+
+#### find out the students having hobbies (find the students where the hobbies is an array )
+
+
+
+# find the students with hobbies as an array
+# $type will check if the data type of collection matches with required type
+db.students.find({hobbies:{$type:'array'}})
+
+# find the student who are having hobbies length = 2  =$size
+
+db.students.find({hobbies:{$size:2}})
+
+#### find out the students who has the 
+programming as one of the hobbies --->$elemMatch
+db.students.find({hobbies:'Programming'})
+
+db.students.find({
+    hobbies:{ 
+        $elemMatch:{$eq:'Programming'}
+    }
+    })
+
+
+#### find all student who passed 12th 
+standard in year 2006
+db.students.find({
+    academics:{
+        $elemMatch:
+        {
+            $and:
+            [
+                {std:"12th"},
+                {passing:2006}
+            ]
+        }
+    }
+})
+
+
+#### find all the students having score 
+less than 80% in 10th exam
+
+
+
+db.students.find({
+    academics:{
+        $elemMatch:
+        {
+            $and:
+            [
+                {std:"10th"},
+                {marks:{$lt:80}}
+            ]
+        }
+    }
+})
+
+#### find all the students having hobby as Sports 
+and Music
+
+db.students.find({
+    $and:[
+        {hobbies: {$elemMatch:{$eq:"Sports"}}},
+        {hobbies: {$elemMatch:{$eq:"Music"}}}
+    ]
+})
+
+$all
+db.students.find({
+    hobbies:{$all:["Sports","Music"]}
+})
+
+
+#### find all the students who like to Teach 
+or listen to Music
+
+db.students.find({
+    $or:[
+        {hobbies: {$elemMatch:{$eq:"Teaching"}}},
+        {hobbies: {$elemMatch:{$eq:"Music"}}}
+    ]
+})
+
+$in
+db.students.find({
+    hobbies:{$in:["Teaching","Music"]}
+})
+
+
+#### find all students who do not like programming
+
+$nin
+
+db.students.find({
+    hobbies:{$nin:["Programming"]}
+})
+
+
+#### display the students for whom Music is the 1th hobby
+
+db.students.find({
+    'hobbies.0':{$eq:"Music"}
+})
+
+
+
+#### display the students for whom Sports is the 2st hobby
+
+db.students.find({
+    'hobbies.1':{$eq:"Sports"}
+})
+
+-->### display a students information
+
+# returns a single document
+db.students.findOne({_id:3})
+
+

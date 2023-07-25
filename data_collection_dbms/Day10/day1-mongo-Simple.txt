@@ -1,0 +1,280 @@
+## mongo commands
+- connect to the mongo database
+ - by default the mongo command connects with the local database running on port 27017
+
+-check mongodb current version
+  >mongo --version
+
+-Open mongo shell
+  > mongo
+
+-exit from mongo shell
+	> exit   or press ctr+c
+
+- list all the databases
+	> show dbs
+
+- by default the mongo installation creates 3 databases:
+    - admin
+    - config
+    - local
+
+- create a new database and switch to it
+	> use mydb
+  - when a db gets created, it get created as an empty database
+  - the empty database wont be shown in the show dbs command
+
+
+- get the selected db information
+  - db here is an object which refers to the currently selected database	
+  > db
+
+- get the statistics of current database
+  > db.stats()
+  
+- drop a database
+  > db.dropDatabase()
+========================================================================
+
+#### collection commands
+- list all the collections
+  > show collections
+
+- create a new colletion
+  > db.createCollection('person')
+  
+- drop a collection
+  > db.person.drop()
+
+help -->db.crea and click in tab
+================================================================
+#### document level commands
+
+- insert a document inside a collection
+   > db.person.insert({"name":"person1", "address":"pune"})
+   > db.person.insert({name:"person2", address:"pune"})
+  
+- get all the documents from a collection
+
+  # get the list of documents
+  > db.person.find()
+
+  # get the list of documents in pretty formatted
+  > db.person.find().pretty()
+
+- drop a collection
+  >db.person.drop();
+
+# create a new collection
+# create table student (....)
+  > db.createCollection('student')
+
+# insert an object into a collection
+# insert into student (...) values (...)
+> db.student.insert({name:"ayush",standard:8,class:"B",roll:3})
+> db.student.insert({name:"jayesh",standard:5,class:"C",roll:23,mobile:"456545532"})
+
+# insert multiple documents
+# insert into student (...) values (...), (...), (...);
+> db.student.insertMany(
+  [
+    {name:"sanjay",roll:4},
+    {name:"ajay",roll:5, standard:6},
+    {name:"vijay",roll:6,class:"D"}
+  ])
+
+> db.person.insertMany([
+    {name: 'person1', address: 'address 1', email: 'person1@test.com'},
+    {name: 'person2', address: 'address 2', email: 'person2@test.com'},
+    {name: 'person3', address: 'address 3', email: 'person3@test.com'},
+    {name: 'person4', address: 'address 4', email: 'person4@test.com'},
+    {name: 'person5', address: 'address 5', email: 'person5@test.com'},
+    {name: 'person6', address: 'address 6', email: 'person6@test.com'},
+    {name: 'person7', address: 'address 7', email: 'person7@test.com'},
+    {name: 'person8', address: 'address 8', email: 'person8@test.com'},
+    {name: 'person9', address: 'address 9', email: 'person9@test.com'},
+    {name: 'person10', address: 'address 10', email: 'person10@test.com'},
+    {name: 'person11', address: 'address 11', email: 'person11@test.com'},
+    {name: 'person12', address: 'address 12', email: 'person12@test.com'},
+    {name: 'person13', address: 'address 13', email: 'person13@test.com'},
+    {name: 'person14', address: 'address 14', email: 'person14@test.com'},
+    {name: 'person15', address: 'address 15', email: 'person15@test.com'},
+    {name: 'person16', address: 'address 16', email: 'person16@test.com'},
+    {name: 'person17', address: 'address 17', email: 'person17@test.com'},
+    {name: 'person18', address: 'address 18', email: 'person18@test.com'},
+    {name: 'person19', address: 'address 19', email: 'person19@test.com'},
+    {name: 'person20', address: 'address 20', email: 'person20@test.com'},
+    {name: 'person21', address: 'address 21', email: 'person21@test.com'},
+    {name: 'person22', address: 'address 22', email: 'person22@test.com'},
+    {name: 'person23', address: 'address 23', email: 'person23@test.com'},
+    {name: 'person24', address: 'address 24', email: 'person24@test.com'},
+    {name: 'person25', address: 'address 25', email: 'person25@test.com'}
+])
+
+### finding the documents
+
+- the find() returns a collection of objects known as cursor
+- the find() by default returns only 20 records
+- if you want to see further records, use it (iterate) command which will load next 20 records
+
+# find all the documents
+# select * from student;
+> db.person.find()
+
+# pretty print the document
+# print in JSON readable format
+> db.person.find().pretty()
+
+# print the count of records
+# select count(*) from student
+> db.person.find().count()
+
+# limit the number of records to 5
+# select * from person limit 5
+> db.person.find().limit(5)
+
+# skip first 5 documents
+# show first 5 records
+> db.person.find().skip(0).limit(5)
+
+- skip first 5 records and show next 5 records
+> 
+> db.person.find().skip(5).limit(5)
+
+# get all the records in m array
+>persons=db.person.find().toArray()
+> persons
+
+# person an action programmatically on array of documents
+>db.person.find().forEach((item)=>{print(item.name)})
+>
+
+# sort collection in ascending order by email
+# select * from person order by email ASC
+> db.person.find().sort({email:1})
+
+# sort collection in descending order by email
+# select * from person order by email DESC
+> db.person.find().sort({email:-1})
+
+
+#### iteration logic on cursor
+
+# create a variable to store the cursor
+> const cursor=db.person.find()
+
+# check if the cursor has got any records
+> cursor.hasNext()
+
+# show the next records
+> cursor.next()
+
+
+#### find with selection
+
+# find the person having name as 'person6'
+# select * from person where name = 'person6';
+> db.person.find({name:"person6"})
+
+# find the student having roll no 23
+> db.student.find({roll:23})
+
+# find the person who has address as address 10
+> db.person.find({address:"address 10"})
+
+#### update query
+
+- update existing document
+
+# update person (entire object) having name person2 with address: 'pune'
+# the following query will replace existing schema with {address: 'pune'}
+> db.person.update({name:"person2"},{address: 'pune'})
+> db.person.update({name:"person3"},{address: 'pune',name:'person3',email:"person3@test.com"})
+
+# update only the address (required fields) of person4 address=mumbai
+> db.person.update({name:"person4"},{$set:{address: 'mumbai'}})
+
+#### delete records
+
+# delete a person record having name = 'person5'
+> db.person.deleteOne({name:'person5'})
+> db.person.remove({name:'person6'})
+
+=================================================
+insert dept and emp records from given field
+
+# list all departments
+db.dept.find()
+
+# list all employees
+db.emp.find()
+
+# list all employees order by ename ASC
+db.emp.find().sort({ename:1})
+
+# list all employees order by dept no DESC
+db.emp.find().sort({deptno:-1})
+
+
+# list all employees order by salary DESC
+db.emp.find().sort({sal:-1})
+
+# list all employees order by dept no ASC and salary DESC
+db.emp.find().sort({deptno:1,sal:-1})
+
+# find the employee who is getting the highest salary
+db.emp.find().sort({sal:-1}).limit(1)
+# find the top 3 paying employees
+db.emp.find().sort({sal:-1}).limit(3)
+
+# find the employee who is getting the lowest salary
+db.emp.find().sort({sal:1}).limit(1)
+
+# find the top 3 lowest paying employees
+db.emp.find().sort({sal:1}).limit(3)
+
+```
+
+## projection
+
+- select the columns / fields in the results
+- syntax
+
+  - db.collection.find(<selection>, <projection>)
+  - where
+    - selection: 
+    - projection: 
+
+- ways
+
+  - you can not mix inclusion and exclusion together except the case of _id otherwise you will see following error
+
+    - Cannot do exclusion on field job in inclusion projection
+
+  - inclusion
+
+    # find all employees with name, dept no
+    db.emp.find({},{ename:1 ,deptno:1})
+    
+     # find all employees with only ename and job
+	db.emp.find({},{ename:1 ,deptno:1, _id:0})
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+

@@ -1,0 +1,24 @@
+1] 
+
+Install pycharm on ubuntu
+
+terminal >  sudo snap install pycharm-community --classic
+
+terminal >  pycharm-community
+
+or download from browser
+
+https://www.jetbrains.com/pycharm/download
+
+-------------------------------------------------------------------------------
+
+Ubuntu 22.04 Eclipse installation
+
+$ sudo snap install --classic eclipse
+
+$ sudo apt update
+$ sudo apt install default-jre
+
+$ eclipse
+
+-------------------------------------------------------

@@ -1,0 +1,7 @@
+To install Redis on Ubuntu, go to the terminal and type the following commands −
+ > sudo apt-get update
+ > sudo apt-get install redis-server
+ Start Redis
+	> redis-server
+ Run client
+	> redis-cli

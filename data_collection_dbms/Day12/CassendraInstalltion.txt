@@ -1,0 +1,52 @@
+sudo apt-get update
+
+echo "deb https://downloads.apache.org/cassandra/debian 40x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
+
+sudo apt-get install curl
+
+curl https://downloads.apache.org/cassandra/KEYS | sudo apt-key add -
+
+sudo apt-get update
+
+	If you encounter this error:
+
+  	GPG error: http://www.apache.org 311x InRelease: The following signatures couldn't be verified because the public key is not 	available: NO_PUBKEY A278B781FE4B2BDA
+
+	Then add the public key A278B781FE4B2BDA as follows:
+
+	sudo apt-key adv --keyserver pool.sks-keyservers.net --recv-key A278B781FE4B2BDA
+
+sudo apt-get install cassandra cassandra-tools
+
+sudo service cassandra status
+
+nodetool status
+
+cqlsh
+
+Inside Cqlsh
+
+CREATE KEYSPACE test
+WITH replication = {'class':'SimpleStrategy', 'replication_factor' : 3};
+
+USE test;
+
+CREATE TABLE emp(
+   emp_id int PRIMARY KEY,
+   emp_name text,
+   emp_city text,
+   emp_sal varint,
+   emp_phone varint
+   );
+   
+----------------------------------------------------------------------------   
+ You must have root or sudo permissions to stop the Cassandra service:
+ >sudo service cassandra stop
+ 
+ ------------------------------------------------------------------
+ error like->
+ 
+ OpenJDK 64-Bit Server VM warning: Cannot open file /var/log/cassandra/gc.log due to Permission denied
+ solution run following 2 commands
+ sudo chown -R $USER:$GROUP /var/lib/cassandra/
+ sudo chown -R $USER:$GROUP /var/log/cassandra/

@@ -1,0 +1,35 @@
+How to Install  MongoDB 5.0 on Ubuntu 22.04
+
+sudo apt update
+
+sudo apt install dirmngr gnupg apt-transport-https ca-certificates software-properties-common
+
+wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
+
+
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
+
+
+sudo apt-get update
+
+
+sudo apt-get install -y mongodb-org
+
+	if get error  the copy following
+
+	echo "deb http://security.ubuntu.com/ubuntu focal-security main" | sudo tee /etc/apt/sources.list.d/focal-security.list
+	sudo apt-get update
+	sudo apt-get install libssl1.1
+
+	after this again try above command
+	sudo apt-get install -y mongodb-org 
+
+systemctl start mongod
+systemctl enable mongod
+
+
+systemctl status mongod
+
+
+mongo
+exit

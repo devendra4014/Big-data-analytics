@@ -1,0 +1,372 @@
+
+Mongo db
+
+## Validators 
+* Like CHECK constraint in RDBMS.
+* Check the values to meet some 
+criteria before insert/update the 
+document.
+
+```JS
+create employee collection having 
+following validator
+1 name= type:string
+2 age = type: number 
+3 age = gte: 18 
+4 mobile: having 0 to 9 digit and its length =10  
+-->regex: /^[0-9]{10}$/
+
+db.createCollection("employee",{
+	validator:{
+		$and:[
+			{name:{$type:'string'}},
+			{age:{$type:'number'}},
+			{age:{$gte:18}},
+			{mobile:{$regex: /^[0-9]{10}$/}}
+		]
+	}
+})
+
+###insert employee having name=Abhishek age=30  
+mobile =9822012345
+db.employee.insert({
+	name:"Abhishek",
+	age:30,
+	mobile:"9822012345"
+})
+
+###insert employee having name=Nikhil 
+age=5 mobile =9822012345
+
+db.employee.insert({
+	name:"Nikhil",
+	age:5,
+	mobile:"9822012345"
+})-----> //error
+###insert employee having name=Nishant age=40 
+db.employee.insert({
+	name:"Nishant",
+	age:40
+})----->//error
+
+###insert employee having name=Nikhil age=25 
+mobile =098812088115
+
+db.employee.insert({
+	name:"Nikhil",
+	age:25,
+	mobile:"098812088115"
+})----->//error
+
+###insert employee having name=Prashant age=45 
+mobile =9822012345 email='prashant@yahoo.com' 
+  
+
+db.employee.insert({
+	name:"Prashant",
+	age:45,
+	mobile:"9822012345",
+	email:'prashant@yahoo.com' 
+})
+```
+structured-books
+semi-structured - emp json ,xml
+unstructured - images , pdf, video, 
+
+## Grid FS
+* Used to save larger files like image, recording, PDF documents, etc.
+* Not done using mongo JS shell.
+* Done using Mongo drivers (of different languages) and "mongofiles" command.
+
+```sh
+cmd> cd dirpath
+
+cmd> mongofiles -d dbda put file.ext
+
+cmd> mongofiles -d dbda list
+
+cmd> cd different_dirpath
+
+cmd> mongofiles -d dbda get file.ext
+```
+```JS
+show collections;
+
+db.fs.files.find().pretty();
+
+db.fs.chunks.find().pretty();
+
+db.fs.chunks.find({}, {data:0}).pretty();
+```
+
+
+## Mongo Python Connectivity
+* cmd> python3 -m pip install pymongo
+
+# Mongo Python Connectivity
+* terminal> python3 -m pip install pymongo
+
+```py
+#!/usr/bin/python3
+
+from pymongo import MongoClient
+
+client = MongoClient('mongodb://localhost:27017/')
+
+db = client['classwork']
+
+emp = db['emp']
+
+criteria = { 'job': 'MANAGER' }
+cursor = emp.find(criteria)
+
+for e in cursor:
+	print(e['_id'], ', ', e['ename'], ', ', e['job'], ', ', e['sal'])
+```
+
+# Enable security
+
+* terminal> mongo
+
+```JS
+use admin
+
+db.createUser({
+	user: 'root',
+	pwd: 'manager',
+	roles: [ { role: "userAdminAnyDatabase", db: "admin" }, "readWriteAnyDatabase" ]
+})
+
+db.adminCommand( { shutdown: 1 } )
+```
+
+* terminal> sudo vim /etc/mongod.conf
+security:
+    authorization: enabled
+
+* terminal> sudo systemctl restart mongo
+
+* terminal> mongo --authenticationDatabase "admin" -u "root" -p
+
+```JS
+use classwork
+
+db.createUser({
+		user: 'dbda',
+		pwd:  'dbda', 
+		roles: [ { role: "readWrite", db: "classwork" } ]
+})
+
+exit
+```
+
+* terminal> mongo --authenticationDatabase "classwork" -u "dbda" -p
+
+=========================================================================
+## cassandra
+
+- NoSQL database which can be accessed using CQL
+- all commands are case insensitive
+
+```bash
+
+# start the cassandra server in background
+> cassandra
+
+# start the cassandra server in foreground
+> cassandra -f
+
+# start the cql shell to interact with cassandra
+> cqlsh
+
+
+runniing in background
+>sudo service cassandra status
+
+```
+
+### mapping
+### mapping
+
+| mysql    | cassandra |
+| -------- | --------- |
+| database | keyspace  |
+| table    | table     |
+| row      | row       |
+| column   | column    |
+
+### keyspace
+
+- similar to the database in MySQL
+
+```sql
+
+-- get all keyspaces
+describe keyspaces
+
+-- create a new keyspace
+-- create database db1;
+create keyspace dbda with replication = 
+{ 'replication_factor': 1, 'class': 'SimpleStrategy' };
+
+-- show the information (schema) of selected keyspace (db1)
+describe keyspace db1
+
+-- create a new keyspace
+-- here the class in the replication properties is mandatory
+-- without class value, cassandra would not know how to replicate the keyspaces
+create keyspace db2 with replication = { 'replication_factor': 2 };
+
+-- use the required keyspace
+-- henceforth all the commands will be executed under the db1
+-- use db1;
+use db1
+
+```
+
+### table related commands
+
+- table in cassandra is similar to the table in MySQL
+
+```sql
+
+-- get all the tables in the selected keyspace
+-- show tables;
+describe tables;
+
+-- create a new table
+-- create table student (id integer primary key, name varchar(20), marks float);
+create tablne student (id int primary key, name text, marks float);
+
+
+
+
+
+-- describe the table details
+-- describe student;
+describe table student;
+
+-- insert a row in the table
+-- insert into student values (1, 'ganesh', 90);
+insert into student (id, name, marks) values (1, 'ganesh', 90);
+insert into student (id, name, marks) values (2, 'ashish', 88);
+insert into student (id, name, marks) values (3, 'amit', 48);
+
+```
+
+```sql
+
+-- select all records
+-- select * from student;
+select * from student;
+
+-- show details of a student having id 2
+-- select * from student where id = 2;
+-- filtering on the indexed column (since id is a primary key a default index gets created on the id column)
+select * from student where id = 2;
+
+-- show the details of a student named 'ashish'
+-- select * from student where name = 'ashish';
+-- filtering on the non-indexed will raise an error [InvalidRequest] with error code 2200
+-- doing so the you will get unpredictable performance
+-- select * from student where name = 'ashish';
+
+-- show the details of student name ashish without creating an index on name
+-- allow filtering on the a non-index column(s)
+select * from student where name = 'ashish' allow filtering;
+
+-- show students having marks > 60
+-- select * from student where marks > 60
+select * from student where marks > 60 allow filtering;
+
+```
+
+### indexing a column
+
+```sql
+
+-- create an index on name column
+-- create index on student (name);
+create index on student (name);
+
+-- show the table details
+describe table student;
+
+-- drop the index
+-- drop index <index name>;
+drop index student_name_idx;
+
+```
+
+### update operation
+
+```sql
+
+-- update marks of student having id = 1
+-- update student set marks = 95 where id = 1;
+update student set marks = 95 where id = 1;
+
+-- get updated details
+select * from student;
+
+```
+
+### delete operation
+
+- if deleting multiple records, cassandra treats the operations as multiple write operations (multiple entries will be created in the commit logs)
+- individual delete operations are always slower
+- it is recommended that you should delete entire partition or the whole table at once for better performance (if possible)
+
+```sql
+
+-- delete student having id = 1
+-- delete from student where id = 1;
+delete from student where id = 1;
+
+-- get remaining student details
+select * from student;
+
+-- delete all records from student table
+-- truncate student;
+truncate student;
+
+-- delete the whole table
+-- drop table student;
+drop table student;
+
+```
+
+### more examples
+
+```sql
+
+-- create a table to hole employee information
+-- employee must have multiple emails
+create table employee (id int primary key, name text, email set<text>);
+
+-- insert employee info
+insert into employee (id, name, email) values (1, 'ashish', {'ashish@gmail.com', 'ashish9898@sunbeaminfo.com'});
+insert into employee (id, name, email) values (2, 'emp1', {'emp1@gmail.com', 'emp2@test.com'});
+
+-- get all employees
+select * from employee;
+
+-- add a new column name department
+-- employee may belong to multiple departments
+alter table employee add department list<text>;
+
+-- set the department for 1st employee
+update employee set department = ['ADMIN', 'HR'] where id = 1;
+update employee set department = ['QA', 'OPS'] where id = 2;
+
+-- add a column name phone_numbers with structure {type: phone_number}
+alter table employee add phone_numbers map<text, text>;
+
+-- update phone numbers
+update employee set phone_numbers = { 'home': '21345545', 'office': '2423424' } where id = 1;
+update employee set phone_numbers = { 'home': '2536985', 'office': '89974546' } where id = 2;
+
+```
+
+
+
