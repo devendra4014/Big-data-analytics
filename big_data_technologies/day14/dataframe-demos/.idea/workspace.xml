@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6887c96d-8416-42f0-85b4-6d666bdea87f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dataframe-demos.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demo09-movieratings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demo10-spark-tables.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demo11-spark-tables.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demo12-hive-metastore.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demo13-hive-jdbc.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/derby.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp/._SUCCESS.crc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp/.part-00000-545eab2c-5c1b-49ff-a647-8e46419858fa-c000.snappy.parquet.crc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp/_SUCCESS" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp/part-00000-545eab2c-5c1b-49ff-a647-8e46419858fa-c000.snappy.parquet" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_bucketed/._SUCCESS.crc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_bucketed/.part-00000-137bae4b-e832-4c73-88d4-a39e25a91d1e_00000.c000.snappy.parquet.crc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_bucketed/.part-00000-137bae4b-e832-4c73-88d4-a39e25a91d1e_00001.c000.snappy.parquet.crc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_bucketed/_SUCCESS" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_bucketed/part-00000-137bae4b-e832-4c73-88d4-a39e25a91d1e_00000.c000.snappy.parquet" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_bucketed/part-00000-137bae4b-e832-4c73-88d4-a39e25a91d1e_00001.c000.snappy.parquet" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_job_part/._SUCCESS.crc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_job_part/_SUCCESS" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_job_part/deptno=10/job=CLERK/.part-00000-69fbc695-a2ec-4851-8640-e21e1be5d423.c000.snappy.parquet.crc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_job_part/deptno=10/job=CLERK/part-00000-69fbc695-a2ec-4851-8640-e21e1be5d423.c000.snappy.parquet" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_job_part/deptno=10/job=MANAGER/.part-00000-69fbc695-a2ec-4851-8640-e21e1be5d423.c000.snappy.parquet.crc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_job_part/deptno=10/job=MANAGER/part-00000-69fbc695-a2ec-4851-8640-e21e1be5d423.c000.snappy.parquet" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_job_part/deptno=10/job=PRESIDENT/.part-00000-69fbc695-a2ec-4851-8640-e21e1be5d423.c000.snappy.parquet.crc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_job_part/deptno=10/job=PRESIDENT/part-00000-69fbc695-a2ec-4851-8640-e21e1be5d423.c000.snappy.parquet" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_job_part/deptno=20/job=ANALYST/.part-00000-69fbc695-a2ec-4851-8640-e21e1be5d423.c000.snappy.parquet.crc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_job_part/deptno=20/job=ANALYST/part-00000-69fbc695-a2ec-4851-8640-e21e1be5d423.c000.snappy.parquet" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_job_part/deptno=20/job=CLERK/.part-00000-69fbc695-a2ec-4851-8640-e21e1be5d423.c000.snappy.parquet.crc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_job_part/deptno=20/job=CLERK/part-00000-69fbc695-a2ec-4851-8640-e21e1be5d423.c000.snappy.parquet" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_job_part/deptno=20/job=MANAGER/.part-00000-69fbc695-a2ec-4851-8640-e21e1be5d423.c000.snappy.parquet.crc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_job_part/deptno=20/job=MANAGER/part-00000-69fbc695-a2ec-4851-8640-e21e1be5d423.c000.snappy.parquet" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_job_part/deptno=30/job=CLERK/.part-00000-69fbc695-a2ec-4851-8640-e21e1be5d423.c000.snappy.parquet.crc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_job_part/deptno=30/job=CLERK/part-00000-69fbc695-a2ec-4851-8640-e21e1be5d423.c000.snappy.parquet" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_job_part/deptno=30/job=MANAGER/.part-00000-69fbc695-a2ec-4851-8640-e21e1be5d423.c000.snappy.parquet.crc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_job_part/deptno=30/job=MANAGER/part-00000-69fbc695-a2ec-4851-8640-e21e1be5d423.c000.snappy.parquet" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_job_part/deptno=30/job=SALESMAN/.part-00000-69fbc695-a2ec-4851-8640-e21e1be5d423.c000.snappy.parquet.crc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_job_part/deptno=30/job=SALESMAN/part-00000-69fbc695-a2ec-4851-8640-e21e1be5d423.c000.snappy.parquet" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_part/._SUCCESS.crc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_part/_SUCCESS" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_part/deptno=10/.part-00000-2cd8cf55-df4d-4330-85b3-9fdf976c5f71.c000.snappy.parquet.crc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_part/deptno=10/part-00000-2cd8cf55-df4d-4330-85b3-9fdf976c5f71.c000.snappy.parquet" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_part/deptno=20/.part-00000-2cd8cf55-df4d-4330-85b3-9fdf976c5f71.c000.snappy.parquet.crc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_part/deptno=20/part-00000-2cd8cf55-df4d-4330-85b3-9fdf976c5f71.c000.snappy.parquet" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_part/deptno=30/.part-00000-2cd8cf55-df4d-4330-85b3-9fdf976c5f71.c000.snappy.parquet.crc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_part/deptno=30/part-00000-2cd8cf55-df4d-4330-85b3-9fdf976c5f71.c000.snappy.parquet" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_part_bucketed/._SUCCESS.crc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_part_bucketed/_SUCCESS" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_part_bucketed/deptno=10/.part-00000-db74d70e-0092-4710-a421-49d33523b9e7_00000.c000.snappy.parquet.crc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_part_bucketed/deptno=10/.part-00000-db74d70e-0092-4710-a421-49d33523b9e7_00001.c000.snappy.parquet.crc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_part_bucketed/deptno=10/part-00000-db74d70e-0092-4710-a421-49d33523b9e7_00000.c000.snappy.parquet" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_part_bucketed/deptno=10/part-00000-db74d70e-0092-4710-a421-49d33523b9e7_00001.c000.snappy.parquet" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_part_bucketed/deptno=20/.part-00000-db74d70e-0092-4710-a421-49d33523b9e7_00000.c000.snappy.parquet.crc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_part_bucketed/deptno=20/.part-00000-db74d70e-0092-4710-a421-49d33523b9e7_00001.c000.snappy.parquet.crc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_part_bucketed/deptno=20/part-00000-db74d70e-0092-4710-a421-49d33523b9e7_00000.c000.snappy.parquet" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_part_bucketed/deptno=20/part-00000-db74d70e-0092-4710-a421-49d33523b9e7_00001.c000.snappy.parquet" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_part_bucketed/deptno=30/.part-00000-db74d70e-0092-4710-a421-49d33523b9e7_00000.c000.snappy.parquet.crc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_part_bucketed/deptno=30/.part-00000-db74d70e-0092-4710-a421-49d33523b9e7_00001.c000.snappy.parquet.crc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_part_bucketed/deptno=30/part-00000-db74d70e-0092-4710-a421-49d33523b9e7_00000.c000.snappy.parquet" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spark-warehouse/emp_dept_part_bucketed/deptno=30/part-00000-db74d70e-0092-4710-a421-49d33523b9e7_00001.c000.snappy.parquet" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../kafka-install-linux.pdf" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2Kne8NueaU1YMnoxAO1uL9Zg30M" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager" selected="Python.demo13-hive-jdbc">
+    <configuration name="demo09-movieratings" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="dataframe-demos" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/demo09-movieratings.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="demo10-spark-tables" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="dataframe-demos" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/demo10-spark-tables.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="demo11-spark-tables" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="dataframe-demos" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/demo11-spark-tables.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="demo12-hive-metastore" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="dataframe-demos" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/demo12-hive-metastore.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="demo13-hive-jdbc" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="dataframe-demos" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/demo13-hive-jdbc.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.demo13-hive-jdbc" />
+        <item itemvalue="Python.demo12-hive-metastore" />
+        <item itemvalue="Python.demo11-spark-tables" />
+        <item itemvalue="Python.demo10-spark-tables" />
+        <item itemvalue="Python.demo09-movieratings" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6887c96d-8416-42f0-85b4-6d666bdea87f" name="Changes" comment="" />
+      <created>1674614613306</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1674614613306</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+</project>

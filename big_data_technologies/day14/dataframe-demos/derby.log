@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Wed Jan 25 11:39:22 IST 2023:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0185-e78b-941e-0000170dea98 
+on database directory /home/nilesh/setup/bigdata/apache-hive-3.1.2-bin/metastore_db with class loader org.apache.spark.sql.hive.client.IsolatedClientLoader$$anon$1@708ad39f 
+Loaded from file:/home/nilesh/.local/lib/python3.8/site-packages/pyspark/jars/derby-10.14.2.0.jar
+java.vendor=Private Build
+java.runtime.version=1.8.0_352-8u352-ga-1~20.04-b08
+user.dir=/home/nilesh/sep22/dbda/bigdata/day14/dataframe-demos
+os.name=Linux
+os.arch=amd64
+os.version=5.15.0-58-generic
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

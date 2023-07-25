@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<configuration>
+	<property>
+		<name>fs.defaultFS</name>
+		<value>hdfs://localhost:9000/</value>
+	</property>
+	<property>
+		<name>mapreduce.framework.name</name>
+		<value>yarn</value>
+	</property>
+	<property>
+		<name>yarn.resourcemanager.address</name>
+		<value>localhost:8032</value>
+	</property>
+	<property>
+		<name>dfs.blocksize</name>
+		<value>67108864</value>
+	</property>
+</configuration>
+
+<!--
+* Non-runnable jar
+	* hadoop jar <jar-path> <main-class> -conf <config-file-path> <cmd-line args to main-class>
+* Runnable jar
+	* hadoop jar <jar-path> -conf <config-file-path> <cmd-line args to main-class>
+-->
+
